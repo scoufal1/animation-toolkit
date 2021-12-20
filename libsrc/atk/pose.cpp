@@ -6,21 +6,7 @@ namespace atk {
 Pose::Pose() : rootPos(vec3(0)) {}
 Pose::~Pose() {}
 
-Pose::Pose(const glm::vec3& p) : rootPos(p)
-{
-}
-
-Pose::Pose(const glm::quat& q)
-{
-  jointRots.push_back(q);
-}
-
-Pose::Pose(const glm::vec3& pos, const glm::quat& rot) : rootPos(pos)
-{
-  jointRots.push_back(rot);
-}
-
-Pose::Pose(const Pose& p)
+Pose::Pose(const Pose& p) : rootPos(vec3(0))
 {
   deepCopy(p);
 }
@@ -45,25 +31,10 @@ Pose& Pose::operator = (const Pose& p)
   return *this;
 }
 
-/*
-   std::istream& operator>>(std::istream& s, Pose& v)
-   {
-   s >> v.rootPos; 
-
-   v.jointRots.clear();
-   for (unsigned int i = 0; i < v.jointRots.size(); i++)
-   {
-   glm::quat q;
-   s >> q;
-   v.jointRots.push_back(q);
-   }
-   return s;
-   }*/
-
 std::ostream& operator<<(std::ostream& s, const Pose& v)
 {
   s << "pose(" << std::endl;
-  s << v.rootPos << std::endl; 
+  s << glm::to_string(v.rootPos) << std::endl; 
   for (unsigned int i = 0; i < v.jointRots.size(); i++)
   {
     s << glm::to_string(v.jointRots[i]) << std::endl;
